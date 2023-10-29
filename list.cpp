@@ -84,11 +84,11 @@ int main() {
         isvesti_duomenis("kietiakiai.txt", padalinimas.second);
         auto stop_write = high_resolution_clock::now();
         auto duration_write = duration_cast<microseconds>(stop_write - start_write);
-        cout << "Programa baige darba.\n";
-        cout << "Duomenu nuskaitymas " << duration_read.count() / 1000000.0 << " sek.\n";
-        cout << "Studentu padalinimas " << duration_split.count() / 1000000.0 << " sek.\n";
-        cout << "Studentu rusiavimas " << duration_sort.count() / 1000000.0 << " sek.\n";
-        cout << "Duomenu isvedimas" << duration_write.count() / 1000000.0 << " sek.\n";
+        cout << "Programa baige darba. Rezultatai issaugoti failuose vargsiukai.txt ir kietiakiai.txt.\n";
+        cout << "Duomenu nuskaitymas uztruko: " << duration_read.count() / 1000000.0 << " sek.\n";
+        cout << "Studentu padalinimas uztruko: " << duration_split.count() / 1000000.0 << " sek.\n";
+        cout << "Studentu rusiavimas uztruko: " << duration_sort.count() / 1000000.0 << " sek.\n";
+        cout << "Duomenu isvedimas uztruko: " << duration_write.count() / 1000000.0 << " sek.\n";
     } catch (exception& e) {
         cout << "klaida: " << e.what() << "\n";
     }return 0;
