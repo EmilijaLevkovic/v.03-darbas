@@ -1,4 +1,11 @@
-#include "my_lib.h"
+#include <algorithm>
+#include <exception>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <vector>
+
+using namespace std;
 
 double skaiciuoti_galutini(const vector<int>& nd, int egz) {
     double suma = 0;
