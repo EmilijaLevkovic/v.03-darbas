@@ -56,6 +56,7 @@ int main() {
   try {
       pair<double, double> vector_times = test_vector("studentai10000.txt", "vargsiukai_vector.txt", "kietiakiai_vector.txt"); // testuojame su std::vector<Studentai>
       pair<double, double> list_times = test_list("studentai10000.txt", "vargsiukai_list.txt", "kietiakiai_list.txt"); // testuojame su std::list<Studentai>
+      
       cout << "Programa baige darba.\n";
       cout << "VECTOR LAIKAS:\n";
       cout << "Vector duomenu nuskaitymas: " << vector_times.first << " sek.\n";
@@ -66,6 +67,26 @@ int main() {
       cout << "SKIRTUMAS (Vector-List):\n";
       cout << "Duomenu nuskaitymas: " << vector_times.first - list_times.first << " sek.\n";
       cout << "Kitos operacijos:"<< vector_times.second-list_times.second<<" sek.\n";
+
+      // pridedame kintamuosius, kurie saugos bendrus list ir vector laikus
+    double vector_time_total = 0.0;
+    double list_time_total = 0.0;
+    const int TEST_COUNT = 10;
+    for (int i = 0; i < TEST_COUNT; i++) {
+        pair<double, double> vector_times = test_vector("studentai10000.txt", "vargsiukai_vector.txt", "kietiakiai_vector.txt");
+        pair<double, double> list_times = test_list("studentai10000.txt", "vargsiukai_list.txt", "kietiakiai_list.txt");
+        vector_time_total += vector_times.first + vector_times.second;
+        list_time_total += list_times.first + list_times.second;
+        }
+    double vector_time_average = vector_time_total / TEST_COUNT;
+    double list_time_average = list_time_total / TEST_COUNT;
+    cout << "VECTOR VIDURKIS:\n";
+    cout << "Vector bendras laikas: " << vector_time_average << " sek.\n";
+    cout << "LIST VIDURKIS:\n";
+    cout << "List bendras laikas: " << list_time_average << " sek.\n";
+    cout << "SKIRTUMAS (Vector-List):\n";
+    cout << "Bendras laikas: " << vector_time_average - list_time_average << " sek.\n";
+
   }
     catch (const exception& e){
               cout << "Klaida: " << e.what() << "\n";
