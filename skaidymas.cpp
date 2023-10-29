@@ -1,11 +1,4 @@
-#include <algorithm>
-#include <exception>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
-
-using namespace std;
+#include "my_lib.h"
 
 double skaiciuoti_galutini(const vector<int>& nd, int egz) {
     double suma = 0;
@@ -77,16 +70,36 @@ void surusiuoti_studentus(vector<Studentas>& studentai) {
 }
 
 int main() {
-    try { 
+    try {
+        auto start_read = high_resolution_clock::now();
         vector<Studentas> studentai = nuskaityti_duomenis("studentai10000.txt");
-        pair<vector<Studentas>, vector<Studentas>> padalinimas = padalinti_studentus(studentai); 
-        surusiuoti_studentus(padalinimas.first); 
-      surusiuoti_studentus(padalinimas.second);
-      isvesti_duomenis("vargsiukai.txt", padalinimas.first);
-      isvesti_duomenis("kietiakiai.txt", padalinimas.second);
-      cout << "Programa baige darba. Rezultatai issaugoti failuose vargsiukai.txt ir kietiakiai.txt.\n"; 
-          } catch (exception& e) { 
-              cout << "Programa susidure su klaida: " << e.what() << "\n"; 
-          }
-          return 0;
+        auto stop_read = high_resolution_clock::now();
+        auto duration_read = duration_cast<microseconds>(stop_read - start_read);
+
+        auto start_split = high_resolution_clock::now();
+        pair<vector<Studentas>, vector<Studentas>> padalinimas = padalinti_studentus(studentai);
+        auto stop_split = high_resolution_clock::now();
+        auto duration_split = duration_cast<microseconds>(stop_split - start_split);
+        auto start_sort = high_resolution_clock::now();
+        surusiuoti_studentus(padalinimas.first);
+        surusiuoti_studentus(padalinimas.second);
+        auto stop_sort = high_resolution_clock::now();
+        auto duration_sort = duration_cast<microseconds>(stop_sort - start_sort);
+        auto start_write = high_resolution_clock::now();
+        isvesti_duomenis("vargsiukai.txt", padalinimas.first);
+        isvesti_duomenis("kietiakiai.txt", padalinimas.second);
+        auto stop_write = high_resolution_clock::now();
+        auto duration_write = duration_cast<microseconds>(stop_write - start_write);
+
+        cout << "Programa baige darba. Rezultatai issaugoti failuose vargsiukai.txt ir kietiakiai.txt.\n";
+
+        cout << "Duomenu nuskaitymas uztruko: " << duration_read.count() / 1000000.0 << " sekundes.\n";
+        cout << "Studentu padalinimas uztruko: " << duration_split.count() / 1000000.0 << " sekundes.\n";
+        cout << "Studentu rusiavimas uztruko: " << duration_sort.count() / 1000000.0 << " sekundes.\n";
+        cout << "Duomenu isvedimas uztruko: " << duration_write.count() / 1000000.0 << " sekundes.\n";
+    } catch (exception& e) {
+        cout << "Programa susidure su klaida: " << e.what() << "\n";
+    }
+    return 0;
 }
+
